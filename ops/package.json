@@ -1,0 +1,19 @@
+{
+  "name": "rategold-ops",
+  "version": "1.1.0",
+  "private": true,
+  "description": "RateGold ops ingest API + admin dashboard",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2"
+  }
+}

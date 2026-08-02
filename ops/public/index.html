@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RateGold Ops</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">RateGold Ops</div>
+      <nav>
+        <button type="button" class="nav-btn active" data-view="dashboard">分析看板</button>
+        <button type="button" class="nav-btn" data-view="users">用户列表</button>
+      </nav>
+      <p class="hint">测试轨道数据 · 匿名 install_id</p>
+    </aside>
+    <main class="main">
+      <header class="top">
+        <h1 id="page-title">分析看板</h1>
+        <div class="top-actions">
+          <span id="as-of" class="muted"></span>
+          <button type="button" id="refresh-btn" class="btn">刷新</button>
+        </div>
+      </header>
+
+      <section id="view-dashboard" class="view">
+        <div class="cards" id="metric-cards"></div>
+        <div class="panel">
+          <h2>近 7 日趋势</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>新增用户</th>
+                  <th>活跃 (DAU)</th>
+                </tr>
+              </thead>
+              <tbody id="trend-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-users" class="view hidden">
+        <div class="toolbar">
+          <input id="user-q" type="search" placeholder="搜索 install_id / locale / version" />
+          <button type="button" id="user-search-btn" class="btn">搜索</button>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>install_id</th>
+                  <th>首次活跃</th>
+                  <th>最近活跃</th>
+                  <th>打开次数</th>
+                  <th>最近屏幕</th>
+                  <th>版本</th>
+                  <th>语言</th>
+                </tr>
+              </thead>
+              <tbody id="users-body"></tbody>
+            </table>
+          </div>
+          <div class="pager">
+            <button type="button" id="prev-page" class="btn ghost">上一页</button>
+            <span id="page-info" class="muted"></span>
+            <button type="button" id="next-page" class="btn ghost">下一页</button>
+          </div>
+        </div>
+      </section>
+
+      <p id="error" class="error hidden"></p>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
