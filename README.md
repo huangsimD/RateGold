@@ -13,7 +13,7 @@ Offline FX rates & local gold prices — Flutter Android app (`com.rategold.app`
 | 代码目录 | [`ops/`](ops/) |
 | 部署说明 | [`docs/fx-gold-board-ops.md`](docs/fx-gold-board-ops.md) |
 | Play 安装/活跃 | 后台侧栏 **Play 商店**（手动 CSV 或 Reporting API） |
-| 下版本功能点 | [`docs/下版本上线功能点-1.1.0.md`](docs/下版本上线功能点-1.1.0.md) |
+| 版本迭代计划 | [`Version Plan/`](Version%20Plan/README.md) · 当前 [`v1.1.0`](Version%20Plan/v1.1.0.md) |
 
 管理页需 Basic Auth（账号见 Vercel 项目环境变量 `OPS_ADMIN_*`，勿提交到仓库）。
 
