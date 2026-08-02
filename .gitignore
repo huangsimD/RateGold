@@ -57,3 +57,7 @@ app.*.map.json
 .vercel/
 
 /android/build/
+
+ÃÜÂëtxt.txt
+*ÃÜÂë*
+**/UPLOAD_KEY_CREDENTIALS.txt
