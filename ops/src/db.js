@@ -31,7 +31,7 @@ function createStore(options = {}) {
   }
 
   const useGist = Boolean(gistId && githubToken);
-  const state = { users: {}, events: [], loaded: false };
+  const state = { users: {}, events: [], play_console: null, loaded: false };
   let chain = Promise.resolve();
 
   function withLock(fn) {
@@ -56,11 +56,13 @@ function createStore(options = {}) {
     if (!file || !file.content) {
       state.users = {};
       state.events = [];
+      state.play_console = null;
       return;
     }
     const raw = JSON.parse(file.content);
     state.users = raw.users || {};
     state.events = Array.isArray(raw.events) ? raw.events : [];
+    state.play_console = raw.play_console || null;
   }
 
   function loadFromFile() {
@@ -69,11 +71,13 @@ function createStore(options = {}) {
     if (!fs.existsSync(dbPath)) {
       state.users = {};
       state.events = [];
+      state.play_console = null;
       return;
     }
     const raw = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
     state.users = raw.users || {};
     state.events = Array.isArray(raw.events) ? raw.events : [];
+    state.play_console = raw.play_console || null;
   }
 
   async function ensureLoaded() {
@@ -87,7 +91,11 @@ function createStore(options = {}) {
   }
 
   async function persist() {
-    const payload = JSON.stringify({ users: state.users, events: state.events });
+    const payload = JSON.stringify({
+      users: state.users,
+      events: state.events,
+      play_console: state.play_console,
+    });
     if (useGist) {
       const res = await fetch(`https://api.github.com/gists/${gistId}`, {
         method: 'PATCH',
@@ -259,12 +267,30 @@ function createStore(options = {}) {
     });
   }
 
+  async function getPlayConsoleSnapshot() {
+    return withLock(async () => {
+      await ensureLoaded();
+      return state.play_console;
+    });
+  }
+
+  async function savePlayConsoleSnapshot(snapshot) {
+    return withLock(async () => {
+      await ensureLoaded();
+      state.play_console = snapshot;
+      await persist();
+      return state.play_console;
+    });
+  }
+
   return {
     mode: useGist ? 'github-gist' : 'local-file',
     path: useGist ? `gist:${gistId}` : dbPath,
     ingestEvents,
     dashboardStats,
     listUsers,
+    getPlayConsoleSnapshot,
+    savePlayConsoleSnapshot,
   };
 }
 

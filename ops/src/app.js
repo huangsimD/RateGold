@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const { createStore } = require('./db');
+const playConsole = require('./playConsole');
 
 function createApp() {
   // Load .env only for local runs (optional).
@@ -98,6 +99,46 @@ function createApp() {
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'users failed' });
+    }
+  });
+
+  app.get('/v1/play-console', requireAdmin, async (req, res) => {
+    try {
+      const refresh = String(req.query.refresh || '') === '1';
+      let snapshot = await store.getPlayConsoleSnapshot();
+
+      if (refresh && playConsole.isApiConfigured()) {
+        try {
+          snapshot = await playConsole.fetchLivePlayConsole();
+          await store.savePlayConsoleSnapshot(snapshot);
+        } catch (err) {
+          return res.status(502).json({
+            ...playConsole.statusPayload(snapshot),
+            error: `Play API 拉取失败: ${err.message}`,
+          });
+        }
+      }
+
+      res.json(playConsole.statusPayload(snapshot));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'play-console failed' });
+    }
+  });
+
+  app.post('/v1/play-console/snapshot', requireAdmin, async (req, res) => {
+    try {
+      const snapshot = playConsole.normalizeSnapshot(req.body || {});
+      if (!snapshot.daily.length) {
+        return res.status(400).json({
+          error: 'empty daily rows — provide csv or daily[]',
+        });
+      }
+      const saved = await store.savePlayConsoleSnapshot(snapshot);
+      res.json(playConsole.statusPayload(saved));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'save snapshot failed' });
     }
   });
 

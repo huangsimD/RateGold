@@ -13,8 +13,9 @@
       <nav>
         <button type="button" class="nav-btn active" data-view="dashboard">分析看板</button>
         <button type="button" class="nav-btn" data-view="users">用户列表</button>
+        <button type="button" class="nav-btn" data-view="play">Play 商店</button>
       </nav>
-      <p class="hint">测试轨道数据 · 匿名 install_id</p>
+      <p class="hint">埋点看板 · Play Console 安装/活跃</p>
     </aside>
     <main class="main">
       <header class="top">
@@ -70,6 +71,42 @@
             <button type="button" id="prev-page" class="btn ghost">上一页</button>
             <span id="page-info" class="muted"></span>
             <button type="button" id="next-page" class="btn ghost">下一页</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-play" class="view hidden">
+        <div id="play-status" class="panel notice"></div>
+        <div class="cards" id="play-cards"></div>
+        <div class="panel">
+          <h2>近 30 日（Play）</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>安装 / 获取</th>
+                  <th>卸载</th>
+                  <th>设备安装量</th>
+                  <th>DAU</th>
+                </tr>
+              </thead>
+              <tbody id="play-trend-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>手动同步（不改 App 包）</h2>
+          <p class="muted">
+            从 Play Console → 统计信息 导出或抄写每日数据，粘贴 CSV 后保存。表头示例：
+            <code>date,installs,uninstalls,active_device_installs,dau</code>
+          </p>
+          <textarea id="play-csv" rows="8" placeholder="date,installs,uninstalls,active_device_installs,dau
+2026-08-01,10,1,25,6
+2026-08-02,8,0,30,9"></textarea>
+          <div class="toolbar play-actions">
+            <button type="button" id="play-save-btn" class="btn">保存快照</button>
+            <button type="button" id="play-refresh-api-btn" class="btn ghost">从 Play API 刷新</button>
           </div>
         </div>
       </section>

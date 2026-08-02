@@ -143,6 +143,28 @@ td.mono { font-family: ui-monospace, Consolas, monospace; font-size: 0.8rem; }
   border-radius: 8px;
 }
 
+.notice { margin-bottom: 1rem; line-height: 1.5; }
+.notice ul { margin: 0.4rem 0 0; padding-left: 1.2rem; color: var(--muted); }
+.notice code {
+  font-size: 0.8rem;
+  background: var(--card);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+textarea#play-csv {
+  width: 100%;
+  margin-top: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+.play-actions { margin-top: 0.75rem; }
+
 @media (max-width: 800px) {
   .layout { flex-direction: column; }
   .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; }
